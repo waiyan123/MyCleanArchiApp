@@ -1,5 +1,6 @@
 package com.example.mycleanarchiapp.domain.use_case
 
+import android.util.Log
 import com.example.mycleanarchiapp.common.Resource
 import com.example.mycleanarchiapp.data.remote.dto.toCoin
 import com.example.mycleanarchiapp.domain.model.Coin

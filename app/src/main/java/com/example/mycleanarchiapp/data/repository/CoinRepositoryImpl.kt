@@ -1,5 +1,6 @@
 package com.example.mycleanarchiapp.data.repository
 
+import android.util.Log
 import androidx.room.RoomDatabase
 import com.example.mycleanarchiapp.data.offline_database.MyRoomDatabase
 import com.example.mycleanarchiapp.data.offline_database.entities.toCoin

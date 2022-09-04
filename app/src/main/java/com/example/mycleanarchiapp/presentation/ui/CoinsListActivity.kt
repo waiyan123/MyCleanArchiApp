@@ -19,5 +19,6 @@ class CoinsListActivity : AppCompatActivity() {
 
         val state = mViewModel.state.value
         Log.d("test---","Coins List size "+state.coins.size)
+        Log.d("test---","error "+state.error)
     }
 }
