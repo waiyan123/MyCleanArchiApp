@@ -65,4 +65,16 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
+    //Room for persistence layer
+    implementation "androidx.room:room-runtime:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
+
+    //Room for coroutine
+    implementation 'androidx.room:room-ktx:2.4.2'
+
+    // Compose dependencies
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha08"
+    implementation "com.google.accompanist:accompanist-flowlayout:0.17.0"
+
 }

@@ -1,6 +1,7 @@
 package com.example.mycleanarchiapp.data.remote.dto
 
 
+import com.example.mycleanarchiapp.data.offline_database.entities.CoinEntity
 import com.example.mycleanarchiapp.domain.model.Coin
 import com.google.gson.annotations.SerializedName
 
@@ -28,5 +29,16 @@ fun CoinDto.toCoin() : Coin{
         name = name,
         rank = rank,
         symbol = symbol
+    )
+}
+fun CoinDto.toCoinEntity() : CoinEntity {
+    return CoinEntity(
+        id = id,
+        isActive = isActive,
+        isNew = isNew,
+        name = name,
+        rank = rank,
+        symbol = symbol,
+        type = type
     )
 }

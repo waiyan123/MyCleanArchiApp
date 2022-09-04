@@ -1,6 +1,9 @@
 package com.example.mycleanarchiapp.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.mycleanarchiapp.common.Constants
+import com.example.mycleanarchiapp.data.offline_database.MyRoomDatabase
 import com.example.mycleanarchiapp.data.remote.CoinPaprikaApi
 import com.example.mycleanarchiapp.data.repository.CoinRepositoryImpl
 import com.example.mycleanarchiapp.domain.repository.CoinRepository
@@ -9,6 +12,7 @@ import com.example.mycleanarchiapp.domain.use_case.GetCoinsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,8 +30,8 @@ object CoinModule {
 
     @Provides
     @Singleton
-    fun providesCoinRepository(api : CoinPaprikaApi) : CoinRepository {
-        return CoinRepositoryImpl(api)
+    fun providesCoinRepository(api : CoinPaprikaApi,myRoomDatabase: MyRoomDatabase) : CoinRepository {
+        return CoinRepositoryImpl(api,myRoomDatabase)
     }
 
     @Provides
@@ -44,5 +48,14 @@ object CoinModule {
     @Singleton
     fun providesGetCoinUseCase(coinRepository: CoinRepository) : GetCoinUseCase {
         return GetCoinUseCase(coinRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesMyRoomDatabase(@ApplicationContext context : Context) : MyRoomDatabase{
+        return Room.databaseBuilder(context,MyRoomDatabase::class.java,"My Room Database")
+            .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }
