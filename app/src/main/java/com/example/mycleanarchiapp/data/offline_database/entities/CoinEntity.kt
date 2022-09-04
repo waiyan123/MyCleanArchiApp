@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.mycleanarchiapp.data.remote.dto.CoinDto
+import com.example.mycleanarchiapp.domain.model.Coin
 
 @Entity(tableName = "coin_table")
 data class CoinEntity(
@@ -34,5 +35,14 @@ fun CoinEntity.toCoinDto() : CoinDto {
         rank = rank,
         symbol = symbol,
         type = type
+    )
+}
+fun CoinEntity.toCoin() : Coin {
+    return Coin(
+        id = id,
+        isActive = isActive,
+        name = name,
+        rank = rank,
+        symbol = symbol
     )
 }
