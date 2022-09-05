@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import com.example.mycleanarchiapp.R
+import com.example.mycleanarchiapp.common.Resource
 import com.example.mycleanarchiapp.presentation.viewmodels.CoinsListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,8 +18,10 @@ class CoinsListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val state = mViewModel.state.value
-        Log.d("test---","Coins List size "+state.coins.size)
-        Log.d("test---","error "+state.error)
+        mViewModel.coinsListLivedata.observe(this) {
+            Log.d("test---","coins size "+it.coins.size)
+            Log.d("test---","error "+it.error)
+            Log.d("test---","loading "+it.isLoading)
+        }
     }
 }

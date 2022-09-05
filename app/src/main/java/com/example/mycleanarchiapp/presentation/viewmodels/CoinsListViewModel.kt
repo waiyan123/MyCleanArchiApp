@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mycleanarchiapp.common.Resource
+import com.example.mycleanarchiapp.domain.model.Coin
 import com.example.mycleanarchiapp.domain.use_case.GetCoinsUseCase
 import com.example.mycleanarchiapp.presentation.coin_list.CoinListState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +20,9 @@ import javax.inject.Inject
 class CoinsListViewModel @Inject constructor(private val getCoinsUseCase: GetCoinsUseCase) : ViewModel(){
 
     private val _state = mutableStateOf<CoinListState>(CoinListState())
-    val state : State<CoinListState>  = _state
+    val coinListState : State<CoinListState>  = _state
+
+    val coinsListLivedata = MutableLiveData<CoinListState>()
 
     init {
         getCoins()
@@ -30,13 +34,15 @@ class CoinsListViewModel @Inject constructor(private val getCoinsUseCase: GetCoi
             coins.collect{result->
                 when(result) {
                     is Resource.Success -> {
+                        coinsListLivedata.postValue(CoinListState(coins = result.data ?: emptyList()))
                         _state.value = CoinListState(coins = result.data ?: emptyList())
-                        Log.d("test---","coin list size from view model"+result.data?.size)
                     }
                     is Resource.Error -> {
+                        coinsListLivedata.postValue(CoinListState(error = result.message ?: "An unexpected error occurred"))
                         _state.value = CoinListState(error = result.message ?: "An unexpected error occurred")
                     }
                     is Resource.Loading -> {
+                        coinsListLivedata.postValue(CoinListState(isLoading = true))
                         _state.value = CoinListState(isLoading = true)
                     }
                 }
