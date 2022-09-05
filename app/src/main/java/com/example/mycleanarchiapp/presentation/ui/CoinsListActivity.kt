@@ -3,6 +3,7 @@ package com.example.mycleanarchiapp.presentation.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.mycleanarchiapp.R
 import com.example.mycleanarchiapp.common.Resource
@@ -16,12 +17,20 @@ class CoinsListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_coin_list)
 
-        mViewModel.coinsListLivedata.observe(this) {
-            Log.d("test---","coins size "+it.coins.size)
-            Log.d("test---","error "+it.error)
-            Log.d("test---","loading "+it.isLoading)
+        mViewModel.coinsListStateLivedata.observe(this) {result->
+            when(result) {
+                is Resource.Success -> {
+                    Log.d("test---","coins size ${result.data?.size}")
+                }
+                is Resource.Error -> {
+                    Log.d("test---","${result.message}")
+                }
+                is Resource.Loading -> {
+                    Log.d("test---","Loading")
+                }
+            }
         }
     }
 }

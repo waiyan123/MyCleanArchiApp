@@ -22,7 +22,7 @@ class CoinsListViewModel @Inject constructor(private val getCoinsUseCase: GetCoi
     private val _state = mutableStateOf<CoinListState>(CoinListState())
     val coinListState : State<CoinListState>  = _state
 
-    val coinsListLivedata = MutableLiveData<CoinListState>()
+    val coinsListStateLivedata = MutableLiveData<Resource<List<Coin>>>()
 
     init {
         getCoins()
@@ -34,15 +34,15 @@ class CoinsListViewModel @Inject constructor(private val getCoinsUseCase: GetCoi
             coins.collect{result->
                 when(result) {
                     is Resource.Success -> {
-                        coinsListLivedata.postValue(CoinListState(coins = result.data ?: emptyList()))
+                        coinsListStateLivedata.postValue(Resource.Success(result.data ?: emptyList()))
                         _state.value = CoinListState(coins = result.data ?: emptyList())
                     }
                     is Resource.Error -> {
-                        coinsListLivedata.postValue(CoinListState(error = result.message ?: "An unexpected error occurred"))
+                        coinsListStateLivedata.postValue(Resource.Error(result.message ?: "An unexpected error occurred"))
                         _state.value = CoinListState(error = result.message ?: "An unexpected error occurred")
                     }
                     is Resource.Loading -> {
-                        coinsListLivedata.postValue(CoinListState(isLoading = true))
+                        coinsListStateLivedata.postValue(Resource.Loading())
                         _state.value = CoinListState(isLoading = true)
                     }
                 }
