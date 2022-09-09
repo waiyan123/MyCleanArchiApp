@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.mycleanarchiapp.common.Constants
 import com.example.mycleanarchiapp.common.Resource
 import com.example.mycleanarchiapp.domain.use_case.GetCoinUseCase
-import com.example.mycleanarchiapp.presentation.coin_detail.CoinDetailState
+import com.example.mycleanarchiapp.presentation.coin_detail.state.CoinDetailState
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 

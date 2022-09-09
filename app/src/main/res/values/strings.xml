@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyCleanArchiApp</string>
+    <string name="title_activity_coin_list_compose">CoinListComposeActivity</string>
 </resources>

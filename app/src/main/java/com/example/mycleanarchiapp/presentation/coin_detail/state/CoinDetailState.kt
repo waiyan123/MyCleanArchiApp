@@ -1,6 +1,5 @@
-package com.example.mycleanarchiapp.presentation.coin_detail
+package com.example.mycleanarchiapp.presentation.coin_detail.state
 
-import com.example.mycleanarchiapp.domain.model.Coin
 import com.example.mycleanarchiapp.domain.model.CoinDetail
 
 data class CoinDetailState(

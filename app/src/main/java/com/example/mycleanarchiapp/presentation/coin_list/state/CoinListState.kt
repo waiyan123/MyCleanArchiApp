@@ -1,4 +1,4 @@
-package com.example.mycleanarchiapp.presentation.coin_list
+package com.example.mycleanarchiapp.presentation.coin_list.state
 
 import com.example.mycleanarchiapp.domain.model.Coin
 
