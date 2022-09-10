@@ -1,4 +1,4 @@
-package com.example.mycleanarchiapp.presentation.coin_detail.components
+package com.example.mycleanarchiapp.presentation.coin_list.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,7 +16,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mycleanarchiapp.presentation.Screen
-import com.example.mycleanarchiapp.presentation.ui.components.CoinListItem
 import com.example.mycleanarchiapp.presentation.viewmodels.CoinsListViewModel
 
 @Composable
@@ -47,7 +46,6 @@ fun CoinListScreen(
         if(coinListState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
-
     }
 
 

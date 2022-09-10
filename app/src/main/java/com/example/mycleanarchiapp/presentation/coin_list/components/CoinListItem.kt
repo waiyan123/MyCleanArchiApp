@@ -1,4 +1,4 @@
-package com.example.mycleanarchiapp.presentation.ui.components
+package com.example.mycleanarchiapp.presentation.coin_list.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

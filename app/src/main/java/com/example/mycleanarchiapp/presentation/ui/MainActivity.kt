@@ -12,23 +12,18 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.mycleanarchiapp.common.Resource
-import com.example.mycleanarchiapp.domain.model.Coin
 import com.example.mycleanarchiapp.presentation.Screen
-import com.example.mycleanarchiapp.presentation.coin_detail.components.CoinListScreen
+import com.example.mycleanarchiapp.presentation.coin_list.components.CoinListScreen
 import com.example.mycleanarchiapp.presentation.theme.MyCleanArchiAppTheme
 import com.example.mycleanarchiapp.presentation.viewmodels.CoinsListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CoinListComposeActivity : ComponentActivity() {
+class MainActivity : ComponentActivity() {
 
     val mViewModel : CoinsListViewModel by viewModels()
 
