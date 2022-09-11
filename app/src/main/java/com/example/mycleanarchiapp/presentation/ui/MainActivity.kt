@@ -17,8 +17,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mycleanarchiapp.presentation.Screen
+import com.example.mycleanarchiapp.presentation.coin_detail.components.CoinDetailScreen
 import com.example.mycleanarchiapp.presentation.coin_list.components.CoinListScreen
 import com.example.mycleanarchiapp.presentation.theme.MyCleanArchiAppTheme
+import com.example.mycleanarchiapp.presentation.viewmodels.CoinDetailViewModel
 import com.example.mycleanarchiapp.presentation.viewmodels.CoinsListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     val mViewModel : CoinsListViewModel by viewModels()
+    val coinDetailViewModel : CoinDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +45,12 @@ class MainActivity : ComponentActivity() {
                             route = Screen.CoinListScreen.route
                         ) {
                             CoinListScreen(navController = navController, viewModel = mViewModel)
+                        }
+
+                        composable(
+                            route = Screen.CoinDetailScreen.route +"/{coinId}"
+                        ) {
+                            CoinDetailScreen(viewModel = coinDetailViewModel)
                         }
                     }
                 }

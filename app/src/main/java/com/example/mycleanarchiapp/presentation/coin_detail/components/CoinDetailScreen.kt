@@ -1,9 +1,9 @@
 package com.example.mycleanarchiapp.presentation.coin_detail.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -12,7 +12,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.mycleanarchiapp.data.remote.dto.TeamMember
+import com.example.mycleanarchiapp.domain.model.CoinDetail
 import com.example.mycleanarchiapp.presentation.viewmodels.CoinDetailViewModel
+import com.google.accompanist.flowlayout.FlowRow
 
 @Composable
 fun CoinDetailScreen(
@@ -21,57 +24,86 @@ fun CoinDetailScreen(
     val coinDetailState = viewModel.state.value
     Box(modifier = Modifier.fillMaxSize()) {
 
-        Column(modifier = Modifier.fillMaxSize()) {
-            Row(
+        MainPreview(coinDetailState.coin)
+
+        if (coinDetailState.error.isNotBlank()) {
+            Text(
+                text = coinDetailState.error,
+                color = MaterialTheme.colors.error,
+                textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp)
-            ) {
-
-                Text(
-                    text = "${coinDetailState.coins?.rank}. ${coinDetailState.coins?.name} (${coinDetailState.coins?.symbol})",
-                    style = MaterialTheme.typography.h1
-                )
-            }
+                    .padding(horizontal = 20.dp)
+                    .align(Alignment.Center)
+            )
+        }
+        if (coinDetailState.isLoading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
 }
 
 @Composable
 @Preview(showBackground = true)
-fun samplePreview() {
-    Column(modifier = Modifier.fillMaxSize()) {
-        FirstRow()
-        SecondRow()
-        ThirdRow()
+fun MainPreview(
+    coin: CoinDetail = CoinDetail(
+        "", "", "", "",
+        0, false, emptyList(), emptyList()
+    )
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp)
+    ) {
+        item {
+            FirstRow(coin)
+            Spacer(modifier = Modifier.height(30.dp))
+        }
+
+        item {
+            SecondRow(coin)
+            Spacer(modifier = Modifier.height(30.dp))
+        }
+        item {
+            ThirdRow()
+            Spacer(modifier = Modifier.height(30.dp))
+        }
+        item {
+            FourthRow(coin)
+            Spacer(modifier = Modifier.height(30.dp))
+            Divider()
+        }
+        item {
+            FifthRow(coin)
+
+        }
+
     }
 }
 
 
 @Composable
 fun FirstRow(
-    rank: String = "1",
-    name: String = "Bitcoin",
-    symbol: String = "BTC",
-    active: String = "active"
+    coin: CoinDetail
 ) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp),
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "$rank. $name ($symbol)",
+            text = "${coin.rank}. ${coin.name} (${coin.symbol})",
             style = MaterialTheme.typography.h5,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(8f)
         )
         Text(
-            text = active,
+            text = coin.isActive.toString(),
             textAlign = TextAlign.End,
             color = MaterialTheme.colors.primary,
-            modifier = Modifier.align(CenterVertically)
+            modifier = Modifier
+                .align(CenterVertically)
                 .weight(2f),
             fontStyle = FontStyle.Italic
         )
@@ -80,15 +112,14 @@ fun FirstRow(
 
 @Composable
 fun SecondRow(
-    paragraph: String = "Enabling this setting will require contributors to sign off on commits made through GitHub’s web interface. Signing off is a way for contributors to affirm that their commit complies with the repository's terms, commonly the Developer Certificate of Origin (DCO). Learn more about signing off on commits."
+    coin: CoinDetail
 ) {
     Row(
         modifier = Modifier
-            .padding(10.dp)
             .fillMaxWidth()
     ) {
         Text(
-            text = paragraph,
+            text = coin.description,
             textAlign = TextAlign.Left,
             style = MaterialTheme.typography.body2
         )
@@ -97,9 +128,10 @@ fun SecondRow(
 
 @Composable
 fun ThirdRow() {
-    Row(modifier = Modifier
-        .fillMaxSize()
-        .padding(10.dp)) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
         Text(
             text = "Tags",
             style = MaterialTheme.typography.h6,
@@ -109,8 +141,50 @@ fun ThirdRow() {
 }
 
 @Composable
-fun FourthRow() {
-    Row(modifier = Modifier.fillMaxWidth()) {
-
+fun FourthRow(
+    coin: CoinDetail
+) {
+    FlowRow(
+        modifier = Modifier
+            .fillMaxWidth(),
+        crossAxisSpacing = 10.dp,
+        mainAxisSpacing = 10.dp
+    ) {
+        coin.tags.forEach {
+            CoinTag(tag = it)
+        }
     }
 }
+
+@Composable
+fun FifthRow(
+    coin: CoinDetail
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        coin.teamMemberList.forEach { teamMember ->
+            TeamListItem(
+                teamMember = teamMember,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            )
+        }
+    }
+}
+
+//@Composable
+//fun SampleRow() {
+//    var name by remember {
+//        mutableStateOf("")
+//    }
+//    Row(modifier = Modifier.fillMaxWidth()) {
+//        OutlinedTextField(
+//            value = name,
+//            onValueChange = {
+//                name = it
+//            },
+//            label = { Text("Name") })
+//    }
+//}
+
+
